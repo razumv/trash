@@ -4,7 +4,7 @@
 set timeout -1
 set password "12345QwErTy!"
 
-spawn /bin/bash -c "curl -O https://raw.githubusercontent.com/razumv/trash/refs/heads/main/shardeum-install.sh && chmod +x install.sh && ./install.sh"
+spawn /bin/bash -c "curl -O https://raw.githubusercontent.com/razumv/trash/refs/heads/main/shardeum/shardeum-install.sh && chmod +x install.sh && ./install.sh"
 
 # Step 2: Handle prompts
 log_user 1
