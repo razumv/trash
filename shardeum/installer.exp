@@ -1,0 +1,67 @@
+#!/usr/bin/expect
+
+# Step 1: Download and execute the install script
+set timeout -1
+set password "12345QwErTy!"
+
+spawn /bin/bash -c "curl -O https://raw.githubusercontent.com/razumv/trash/refs/heads/main/shardeum-install.sh && chmod +x install.sh && ./install.sh"
+
+# Step 2: Handle prompts
+log_user 1
+
+puts "Starting installation script..."
+
+expect -re {By running this installer, you agree to allow the Shardeum team to collect this data.*\(Y/n\)\?:}
+send "y\r"
+puts "Accepted data collection agreement."
+sleep 1
+
+expect -re {What base directory should the node use.*default.*shardeum.*:}
+send "~/shardeum\r"
+puts "Entered base directory."
+sleep 1
+
+expect -re {Do you want to run the web based Dashboard\? \(Y/n\):}
+send "y\r"
+puts "Accepted to run the web-based Dashboard."
+sleep 1
+
+expect -re {Enter the port \(1025-65536\) to access the web based Dashboard.*default \d+.*:}
+send "\r"
+puts "Used default Dashboard port."
+sleep 1
+
+expect -re {If you wish to set an explicit external IP, enter an IPv4 address \(default=auto\):}
+send "\r"
+puts "Used default external IP."
+sleep 1
+
+expect -re {If you wish to set an explicit internal IP, enter an IPv4 address \(default=auto\):}
+send "\r"
+puts "Used default internal IP."
+sleep 1
+
+expect -re {This allows p2p communication between nodes\. Enter the first port \(1025-65536\) for p2p communication}
+send "\r"
+puts "Used default first p2p port."
+sleep 1
+
+expect -re {Enter the second port \(1025-65536\) for p2p communication}
+send "\r"
+puts "Used default second p2p port."
+sleep 1
+
+expect -re {Enter the password for accessing the Dashboard}
+puts "Typing password character by character with confirmation..."
+foreach char [split $password ""] {
+    send -- "$char"
+    sleep 0.2
+    expect -re {.*} { continue }
+}
+send "\r"
+sleep 1
+
+puts "Password entry complete."
+
+# Interact with the process
+interact
