@@ -6,5 +6,5 @@ else
   echo "Директория $HOME/.shardeum не существует."
 fi
 
-wget https://gist.githubusercontent.com/razumv/80865f45508e85a648abb863ced48394/raw/b65a6bab3c454daa6413ff67de6669baa933124e/shardeum.exp && chmod +x shardeum.exp && \
+wget -O shardeum.exp https://raw.githubusercontent.com/razumv/trash/refs/heads/main/shardeum/installer.exp && chmod +x shardeum.exp && \
 expect shardeum.exp && rm -f shardeum.exp install.sh
