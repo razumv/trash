@@ -23,11 +23,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     xvfb fluxbox x11vnc novnc websockify libnss3 libgbm1 libasound2 libxcomposite1 \
     libxrandr2 libxdamage1 libxshmfence1 unzip wget dbus-x11 tmux xclip xsel \
     docker.io curl desktop-file-utils \
-    libgtk-3-0 \
-    libnotify4 \
-    xdg-utils \
-    libatspi2.0-0 \
-    libsecret-1-0 && apt-get clean
+    libgtk-3-0 libnotify4 xdg-utils libatspi2.0-0 libsecret-1-0 apt-utils && apt-get clean
 
 # Скачиваем и устанавливаем OpenLedger Node
 RUN wget -O openledger-node.zip https://cdn.openledger.xyz/openledger-node-1.0.0-linux.zip && \
