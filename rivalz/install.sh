@@ -14,6 +14,9 @@ WALLET_FILE="$HOME/evm.txt"
 echo $PROXY > $PROXY_FILE
 echo $WALLET > $WALLET_FILE
 
+echo $PROXY
+echo $WALLET
+
 # Проверка наличия файлов
 if [[ ! -f "$PROXY_FILE" ]] || [[ ! -f "$WALLET_FILE" ]]; then
     echo "Файлы proxy.txt или evm.txt не найдены!"
