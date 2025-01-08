@@ -12,7 +12,7 @@ install_services() {
   echo "Создание Dockerfile..."
   cat <<EOF > Dockerfile
 # Используем базовый образ Ubuntu
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 # Установка временной зоны для автоматической конфигурации tzdata
 ENV TZ=Etc/UTC
@@ -22,7 +22,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     xvfb fluxbox x11vnc novnc websockify libnss3 libgbm1 libasound2 libxcomposite1 \
     libxrandr2 libxdamage1 libxshmfence1 unzip wget dbus-x11 tmux xclip xsel \
-    docker.io curl && apt-get clean
+    docker.io curl desktop-file-utils && apt-get clean
 
 # Скачиваем и устанавливаем OpenLedger Node
 RUN wget -O openledger-node.zip https://cdn.openledger.xyz/openledger-node-1.0.0-linux.zip && \
