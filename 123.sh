@@ -9,87 +9,81 @@ fi
 set -e
 
 install_services() {
-  echo "Обновление списка пакетов и установка необходимых компонентов..."
-  apt-get update
-  apt-get install -y xvfb fluxbox x11vnc novnc websockify libnss3 libgbm1 libasound2 libxcomposite1 libxrandr2 libxdamage1 libxshmfence1 unzip wget dbus-x11 tmux xclip xsel || {
-    echo "Ошибка при установке пакетов."
-    exit 1
-  }
-  echo "Пакеты успешно установлены."
+  echo "Создание Dockerfile..."
+  cat <<EOF > Dockerfile
+# Используем базовый образ Ubuntu
+FROM ubuntu:20.04
 
-  echo "Скачивание и установка OpenLedger Node..."
-  wget -O openledger-node.zip https://cdn.openledger.xyz/openledger-node-1.0.0-linux.zip || {
-    echo "Ошибка при загрузке OpenLedger Node."
-    exit 1
-  }
-  unzip -o openledger-node.zip || {
-    echo "Ошибка при распаковке архива OpenLedger Node."
-    exit 1
-  }
-  sudo dpkg -i openledger-node-1.0.0.deb || sudo apt-get install -f -y
-  echo "OpenLedger Node успешно установлена."
+# Устанавливаем зависимости
+RUN apt-get update && apt-get install -y \
+    xvfb fluxbox x11vnc novnc websockify libnss3 libgbm1 libasound2 libxcomposite1 \
+    libxrandr2 libxdamage1 libxshmfence1 unzip wget dbus-x11 tmux xclip xsel curl docker.io \
+    && apt-get clean
+
+# Скачиваем и устанавливаем OpenLedger Node
+RUN wget -O openledger-node.zip https://cdn.openledger.xyz/openledger-node-1.0.0-linux.zip && \
+    unzip -o openledger-node.zip && \
+    dpkg -i openledger-node-1.0.0.deb || apt-get install -f -y && \
+    rm -rf openledger-node.zip
+
+# Устанавливаем рабочую директорию
+WORKDIR /opt/openledger
+
+# Копируем скрипт для запуска
+COPY start_services.sh /usr/local/bin/start_services.sh
+RUN chmod +x /usr/local/bin/start_services.sh
+
+# Указываем команду по умолчанию
+CMD ["start_services.sh"]
+EOF
+
+  echo "Создание скрипта запуска..."
+  cat <<EOF > start_services.sh
+#!/bin/bash
+
+set -e
+
+# Запуск виртуального дисплея
+Xvfb :100 -screen 0 1024x768x16 &
+export DISPLAY=:100
+sleep 2
+
+# Запуск оконного менеджера
+fluxbox &
+
+# Запуск VNC-сервера
+x11vnc -display :100 -forever -nopw -rfbport 5900 &
+
+# Запуск noVNC
+websockify --web=/usr/share/novnc/ --wrap-mode=ignore 6080 localhost:5900 &
+
+# Запуск OpenLedger Node
+openledger-node --no-sandbox --disable-gpu --disable-software-rasterizer
+EOF
+
+  chmod +x start_services.sh
+
+  echo "Сборка Docker-образа..."
+  docker build -t openledger-container .
+  echo "Docker-образ успешно создан."
 }
 
 start_services() {
-  echo "Запуск виртуального дисплея..."
-  Xvfb :100 -screen 0 1024x768x16 &
-  XVFB_PID=$!
-  export DISPLAY=:100
-  sleep 2
-  if ! ps -p $XVFB_PID > /dev/null; then
-    echo "Не удалось запустить Xvfb."
-    exit 1
-  fi
-  echo "Виртуальный дисплей успешно запущен."
-
-  echo "Запуск оконного менеджера..."
-  fluxbox &
-  FLUXBOX_PID=$!
-  sleep 2
-  if ! ps -p $FLUXBOX_PID > /dev/null; then
-    echo "Не удалось запустить Fluxbox."
-    exit 1
-  fi
-  echo "Оконный менеджер успешно запущен."
-
-  echo "Запуск VNC-сервера..."
-  x11vnc -display :100 -forever -nopw -rfbport 5900 &
-  X11VNC_PID=$!
-  sleep 2
-  if ! ps -p $X11VNC_PID > /dev/null; then
-    echo "Не удалось запустить x11vnc."
-    exit 1
-  fi
-  echo "VNC-сервер успешно запущен."
-
-  echo "Запуск noVNC..."
-  websockify --web=/usr/share/novnc/ --wrap-mode=ignore 6080 localhost:5900 &
-  WEBSOCKIFY_PID=$!
-  sleep 2
-  if ! ps -p $WEBSOCKIFY_PID > /dev/null; then
-    echo "Не удалось запустить noVNC."
-    exit 1
-  fi
-  echo "noVNC успешно запущен. Интерфейс доступен по адресу: http://$(hostname -I | awk '{print $1}'):6080"
-
-  echo "Запуск OpenLedger Node в tmux..."
-  tmux new-session -d -s openledger "openledger-node --no-sandbox --disable-gpu --disable-software-rasterizer"
-  sleep 5
-  if ! tmux has-session -t openledger 2>/dev/null; then
-    echo "Не удалось запустить OpenLedger Node в tmux."
-    exit 1
-  fi
-  echo "OpenLedger Node успешно запущена в tmux. Для просмотра сессии используйте: tmux attach -t openledger"
+  echo "Запуск Docker-контейнера..."
+  docker run -d \
+    --name openledger \
+    -p 6080:6080 \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v $HOME/.config/OpenLedger\ Node/:/root/.config/OpenLedger\ Node/ \
+    openledger-container
+  echo "Контейнер успешно запущен. Интерфейс доступен по адресу: http://$(hostname -I | awk '{print $1}'):6080"
 }
 
 stop_services() {
-  echo "Остановка всех запущенных процессов..."
-  pkill -f "Xvfb :100" || echo "Xvfb уже остановлен."
-  pkill -f "fluxbox" || echo "Fluxbox уже остановлен."
-  pkill -f "x11vnc" || echo "x11vnc уже остановлен."
-  pkill -f "websockify" || echo "websockify уже остановлен."
-  tmux kill-session -t openledger || echo "Сессия tmux openledger уже остановлена."
-  echo "Все процессы успешно остановлены."
+  echo "Остановка Docker-контейнера..."
+  docker stop openledger || echo "Контейнер уже остановлен."
+  docker rm openledger || echo "Контейнер уже удален."
+  echo "Контейнер успешно остановлен и удален."
 }
 
 restart_services() {
