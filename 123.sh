@@ -9,6 +9,8 @@ fi
 set -e
 
 install_services() {
+  mkdir -p $HOME/openledger/
+  cd $HOME/openledger/
   echo "Создание Dockerfile..."
   cat <<EOF > Dockerfile
 # Используем базовый образ Ubuntu
