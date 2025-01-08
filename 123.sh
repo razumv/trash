@@ -11,7 +11,7 @@ set -e
 install_services() {
   echo "Обновление списка пакетов и установка необходимых компонентов..."
   apt-get update
-  apt-get install -y xvfb fluxbox x11vnc novnc websockify libnss3 libgbm1 libasound2 libxcomposite1 libxrandr2 libxdamage1 libxshmfence1 unzip wget dbus-x11 tmux || {
+  apt-get install -y xvfb fluxbox x11vnc novnc websockify libnss3 libgbm1 libasound2 libxcomposite1 libxrandr2 libxdamage1 libxshmfence1 unzip wget dbus-x11 tmux xclip xsel || {
     echo "Ошибка при установке пакетов."
     exit 1
   }
