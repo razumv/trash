@@ -79,6 +79,7 @@ start_services() {
     --name openledger \
     -p 6080:6080 \
     -v /var/run/docker.sock:/var/run/docker.sock \
+    -v $HOME/.config/opl/:/root/.config/opl/ \
     -v $HOME/.config/OpenLedger\ Node/:/root/.config/OpenLedger\ Node/ \
     openledger-container
   echo "Контейнер успешно запущен. Интерфейс доступен по адресу: http://$(hostname -I | awk '{print $1}'):6080"
