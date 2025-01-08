@@ -85,6 +85,7 @@ start_services() {
     -v $HOME/.config/OpenLedger\ Node/:/root/.config/OpenLedger\ Node/ \
     -v $HOME/openledger/logs/:/var/log/opl/ \
     -v $HOME/.local/bin/:/root/.local/bin/ \
+    -v /etc/machine-id:/etc/machine-id:ro \
     openledger-container
   echo "Контейнер успешно запущен. Интерфейс доступен по адресу: http://$(hostname -I | awk '{print $1}'):6080"
 }
