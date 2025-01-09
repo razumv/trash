@@ -77,6 +77,7 @@ EOF
     sudo cp /etc/machine-id /etc/machine-id.bk
     
     echo "Резервная копия machine-id создана: /etc/machine-id.bk"
+    sudo cp $HOME/openledger/machine-id /etc/machine-id 
   else
     echo "Файл /etc/machine-id.bk уже существует. Пропускаю выполнение."
   fi
