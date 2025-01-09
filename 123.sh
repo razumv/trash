@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# Проверка прав root
-if [ "$EUID" -ne 0 ]; then
-  echo "Пожалуйста, запустите скрипт с правами root (sudo)."
-  exit 1
-fi
-
 set -e
 
 install_services() {
