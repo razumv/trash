@@ -73,7 +73,19 @@ EOF
   echo "Сборка Docker-образа..."
   docker build -t openledger-container .
   echo "Docker-образ успешно создан."
-  dbus-uuidgen > $HOME/openledger/machine-id
+  if [ ! -f /etc/machine-id.bk ]; then
+    echo "Файл /etc/machine-id.bk отсутствует. Выполняю команды..."
+    
+    # Генерация нового machine-id
+    dbus-uuidgen > $HOME/openledger/machine-id
+    
+    # Создание резервной копии текущего machine-id
+    sudo cp /etc/machine-id /etc/machine-id.bk
+    
+    echo "Резервная копия machine-id создана: /etc/machine-id.bk"
+  else
+    echo "Файл /etc/machine-id.bk уже существует. Пропускаю выполнение."
+  fi
 }
 
 start_services() {
