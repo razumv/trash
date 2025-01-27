@@ -1,0 +1,14 @@
+#!/usr/bin/expect
+
+set timeout -1
+set password "12345678"
+
+# Запуск команды Docker
+spawn docker run -it -v "/privasea/config:/app/config" privasea/acceleration-node-beta:latest ./node-calc new_keystore
+
+# Ожидание запроса пароля
+expect "Enter password for a new key" { send "$password\r" }
+expect "Enter password again to verify" { send "$password\r" }
+
+# Позволяем скрипту продолжать выполнение и ждать завершения работы Docker
+interact
