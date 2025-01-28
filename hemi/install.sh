@@ -1,17 +1,5 @@
 #!/bin/bash
 
-echo "-----------------------------------------------------------------------------"
-curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/doubletop.sh | bash
-echo "-----------------------------------------------------------------------------"
-
-curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/main.sh | bash &>/dev/null
-curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/ufw.sh | bash &>/dev/null
-curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/go.sh | bash &>/dev/null
-
-echo "-----------------------------------------------------------------------------"
-echo "Установка майнера Hemi Network"
-echo "-----------------------------------------------------------------------------"
-
 grep -qxF 'fs.inotify.max_user_watches=524288' /etc/sysctl.conf || echo 'fs.inotify.max_user_watches=524288' | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 
@@ -73,15 +61,6 @@ sudo systemctl start hemi
 
 sleep 15
 
-echo "Ваш адрес кошелька. Для работы майнера вам необходимо запросить токены в дискорде"
 PUBLIC_ADDRESS=$(journalctl -n 100 -u hemi -o cat | grep -oP '(?<=address )[^\s]+')
 echo "$PUBLIC_ADDRESS" > $HOME/heminetwork/wallet.txt
 
-echo "-----------------------------------------------------------------------------"
-echo "Hemi майнер успешно запущен"
-echo "-----------------------------------------------------------------------------"
-echo "Проверка логов"
-echo "journalctl -n 100 -f -u hemi -o cat"
-echo "-----------------------------------------------------------------------------"
-echo "Wish lifechange case with DOUBLETOP"
-echo "-----------------------------------------------------------------------------"
