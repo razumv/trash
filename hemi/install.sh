@@ -57,7 +57,7 @@ EOF
 
 sudo systemctl enable hemi &>/dev/null
 sudo systemctl daemon-reload
-sudo systemctl start hemi
+sudo systemctl restart systemd-journald hemi
 
 sleep 15
 
