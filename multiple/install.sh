@@ -4,8 +4,6 @@ echo "--------------------------------------------------------------------------
 curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/doubletop.sh | bash
 echo "-----------------------------------------------------------------------------"
 
-curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/main.sh | bash &>/dev/null
-curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/ufw.sh | bash &>/dev/null
 
 echo "Установка проекта"
 
