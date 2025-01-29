@@ -17,6 +17,7 @@ else
     exit 1
 fi
 
+cd $HOME 
 wget $CLIENT_URL -O multipleforlinux.tar
 
 tar -xvf multipleforlinux.tar
