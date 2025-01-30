@@ -2,6 +2,8 @@
 
 set timeout -1
 
+set env(TERM) "xterm"
+
 spawn sh -c {curl -fsSL http://get.sonaric.xyz/scripts/install.sh | sh}
 
 expect {
