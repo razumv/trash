@@ -1,0 +1,21 @@
+#!/usr/bin/expect -f
+
+set timeout -1
+
+spawn sh -c {curl -fsSL http://get.sonaric.xyz/scripts/install.sh | sh}
+
+expect {
+    "Do you want to change your Sonaric node name*" {
+        send "N\r"
+        exp_continue
+    }
+    "Do you want to save your Sonaric identity*" {
+        send "N\r"
+        exp_continue
+    }
+    "Done" {
+        puts "Installation completed successfully!"
+    }
+}
+
+expect eof
