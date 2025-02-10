@@ -22,7 +22,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     libgtk-3-0 libnotify4 xdg-utils libatspi2.0-0 libsecret-1-0 apt-utils && apt-get clean
 
 # Скачиваем и устанавливаем OpenLedger Node
-RUN wget -O openledger-node.zip https://cdn.openledger.xyz/openledger-node-1.0.0-linux.zip && \
+RUN wget -O openledger-node.zip https://snapshots.doubletop.tech/openledger-node-1.0.0-linux.zip && \
     unzip -o openledger-node.zip && \
     dpkg -i openledger-node-1.0.0.deb || apt-get install -f -y && \
     rm -rf openledger-node.zip
