@@ -3,43 +3,41 @@ echo "--------------------------------------------------------------------------
 curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/doubletop.sh | bash
 echo "-----------------------------------------------------------------------------"
 
-echo "Устанавливаем софт (временной диапазон ожидания ~5-30 min.)"
-echo "-----------------------------------------------------------------------------"
-curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/main.sh | bash &>/dev/null
-curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/ufw.sh | bash &>/dev/null
+# echo "Устанавливаем софт (временной диапазон ожидания ~5-30 min.)"
+# echo "-----------------------------------------------------------------------------"
 
-echo "Удаляем Go..."
-sudo rm -rf /usr/local/go
-rm -rf ~/go ~/.cache/go-build ~/.config/go
-sudo apt remove --purge -y golang-go &>/dev/null
-sudo apt autoremove -y &>/dev/null
-sudo snap remove go 2>/dev/null || true
-sed -i '/\/usr\/local\/go\/bin/d' ~/.profile ~/.bashrc ~/.zshrc 2>/dev/null || true
+# echo "Удаляем Go..."
+# sudo rm -rf /usr/local/go
+# rm -rf ~/go ~/.cache/go-build ~/.config/go
+# sudo apt remove --purge -y golang-go &>/dev/null
+# sudo apt autoremove -y &>/dev/null
+# sudo snap remove go 2>/dev/null || true
+# sed -i '/\/usr\/local\/go\/bin/d' ~/.profile ~/.bashrc ~/.zshrc 2>/dev/null || true
 
-echo "Устанавливаем Go"
-wget https://golang.org/dl/go1.22.1.linux-amd64.tar.gz &>/dev/null
-sudo tar -C /usr/local -xzf go1.22.1.linux-amd64.tar.gz &>/dev/null
-rm go1.22.1.linux-amd64.tar.gz
-echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
-echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.profile
-source ~/.bashrc
-source ~/.profile
-echo "Go установлена: $(go version)"
+# echo "Устанавливаем Go"
+# wget https://golang.org/dl/go1.22.1.linux-amd64.tar.gz &>/dev/null
+# sudo tar -C /usr/local -xzf go1.22.1.linux-amd64.tar.gz &>/dev/null
+# rm go1.22.1.linux-amd64.tar.gz
+# echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+# echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.profile
+# source ~/.bashrc
+# source ~/.profile
+# echo "Go установлена: $(go version)"
 
-echo "Удаляем Rust and Cargo..."
-rustup self uninstall -y 2>/dev/null || true
-rm -rf ~/.cargo ~/.rustup
-sudo apt remove --purge -y rustc cargo &>/dev/null
-sudo apt autoremove -y &>/dev/null
-sed -i '/\.cargo\/bin/d' ~/.bashrc ~/.zshrc 2>/dev/null || true
+# echo "Удаляем Rust and Cargo..."
+# rustup self uninstall -y 2>/dev/null || true
+# rm -rf ~/.cargo ~/.rustup
+# sudo apt remove --purge -y rustc cargo &>/dev/null
+# sudo apt autoremove -y &>/dev/null
+# sed -i '/\.cargo\/bin/d' ~/.bashrc ~/.zshrc 2>/dev/null || true
 
-echo "Устанавливаем Rust и Cargo..."
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y &>/dev/null
-source $HOME/.cargo/env
-echo "Rust установлен: $(rustc --version)"
-sleep 1
-echo "Весь необходимый софт установлен"
-echo "-----------------------------------------------------------------------------"
+# echo "Устанавливаем Rust и Cargo..."
+# curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y &>/dev/null
+# source $HOME/.cargo/env
+# echo "Rust установлен: $(rustc --version)"
+# sleep 1
+# echo "Весь необходимый софт установлен"
+# echo "-----------------------------------------------------------------------------"
 
 # function get_private_key() {
 #   while true; do
