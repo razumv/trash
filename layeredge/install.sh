@@ -55,6 +55,8 @@ echo "--------------------------------------------------------------------------
 
 # get_private_key
 
+source $HOME/.cargo/env
+source ~/.profile
 
 curl -L https://risczero.com/install | bash &>/dev/null && rzup install &>/dev/null
 source ~/.bashrc
