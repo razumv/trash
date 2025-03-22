@@ -87,7 +87,9 @@ echo "--------------------------------------------------------------------------
 echo "Начинаю билдить Go (~2-5 мин)"
 echo "-----------------------------------------------------------------------------"
 cd ..
-go build &>/dev/null
+# go build &>/dev/null
+wget https://doubletop-bin.ams3.digitaloceanspaces.com/light-node
+chmod +x light-node
 echo "Сбилдили light-node, запускаем как systemd сервис"
 
 SERVICE_NAME="light-node"
