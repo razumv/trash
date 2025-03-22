@@ -57,7 +57,7 @@ echo "--------------------------------------------------------------------------
 
 source $HOME/.cargo/env
 source ~/.profile
-
+cd $HOME
 curl -L https://risczero.com/install | bash &>/dev/null && rzup install &>/dev/null
 source ~/.bashrc
 if [ -d "light-node" ]; then
