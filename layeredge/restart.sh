@@ -4,7 +4,7 @@ export TERM=xterm
 # Проверяем доступность порта 3001
 if ! nc -z 127.0.0.1 3001; then
     echo "[INFO] Порт 3001 недоступен. Запускаем risc_service..."
-    tmux new-session -d -s risc_service 'cd /root/light-node/risc0-merkle-service; /root/.cargo/bin/cargo build && /root/.cargo/bin/cargo run'
+    sudo systemctl restart risc_service
 else
     echo "[OK] Порт 3001 доступен. Ничего не делаем."
 fi
