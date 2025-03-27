@@ -48,7 +48,7 @@ cat > "$WATCHDOG_SCRIPT" <<'EOF'
 #!/bin/bash
 
 journalctl -fu dria | while read line; do
-    echo "$line" | grep -q "Node has not received any pings for at least 150 seconds" && {
+    echo "$line" | grep -q "Node has not received any pings" && {
         echo "[dria-watchdog] Triggered restart due to ping timeout"
         systemctl restart dria
     }
