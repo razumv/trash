@@ -6,7 +6,7 @@ set output_file "$env(HOME)/soundness_memo.txt"
 # Открытие файла для записи вывода
 log_file -noappend $output_file
 
-spawn $HOME/.soundness/bin/soundness-cli generate-key --name my-key
+spawn /root/.soundness/bin/soundness-cli generate-key --name my-key
 expect "Enter password for secret key"  ;# Ожидаем появления запроса на ввод пароля
 send "12345678\r"
 
