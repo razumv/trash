@@ -22,7 +22,7 @@ echo "Soundnessup CLI установлен"
 
 echo "Генерирую пару ключей | В процессе Вас попросят ввести пароль. Запомните его"
 sleep 3
-bash <(curl -s https://raw.githubusercontent.com/razumv/trash/refs/heads/main/soundness/generate_key.exp)
+expect <(curl -s https://raw.githubusercontent.com/razumv/trash/refs/heads/main/soundness/generate_key.exp)
 sleep 3
 echo "Ключи сгенерированы, сохраните мнемоническую фразу"
 
