@@ -1,6 +1,7 @@
 #!/usr/bin/expect
 
 set timeout -1  ;# Отключение таймаута, чтобы процесс завершился естественно
+set password "12345678"
 set output_file "$env(HOME)/soundness_memo.txt"
 
 # Открытие файла для записи вывода
@@ -8,7 +9,10 @@ log_file -noappend $output_file
 
 spawn /root/.soundness/bin/soundness-cli generate-key --name my-key
 expect "Enter password for secret key"  ;# Ожидаем появления запроса на ввод пароля
-send "12345678\r"
+send "$password\r"
+
+expect "Confirm password"  ;# Ожидаем запрос на подтверждение пароля
+send "$password\r"
 
 expect eof  ;# Ждем завершения команды
 
