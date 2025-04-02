@@ -29,7 +29,7 @@ current_cpu=${cpu_limits[$day_index]}
 current_mem=${mem_limits[$day_index]}
 
 echo "[$(date)] Удаляем предыдущий контейнер: $previous_container"
-docker rm -f $previous_container $current_container 2>/dev/null
+docker rm -f text-ui stable-diffusion rembg upscaler 2>/dev/null
 
 echo "[$(date)] Обновляем образ: $current_image"
 docker pull $current_image
