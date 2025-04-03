@@ -4,16 +4,16 @@ echo "--------------------------------------------------------------------------
 curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/doubletop.sh | bash
 echo "-----------------------------------------------------------------------------"
 
-curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/main.sh | bash 
-curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/ufw.sh | bash 
-curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/docker.sh | bash 
-
 # Скачиваем image из Docker Hub
 docker pull admier/brinxai_nodes-worker:latest
-
-# Копируем репозиторий и заходим в директорию
-git clone https://github.com/admier1/BrinxAI-Worker-Nodes
-mv BrinxAI-Worker-Nodes brinxai_worker
+cd $HOME
+if [ -d "brinxai_worker" ]; then
+    echo "Папка brinxai_worker уже существует. Пропускаем клонирование репозитория."
+else
+    # Копируем репозиторий и заходим в директорию
+    git clone https://github.com/admier1/BrinxAI-Worker-Nodes
+    mv BrinxAI-Worker-Nodes brinxai_worker
+fi
 cd brinxai_worker
 
 # Создаем .env файл
