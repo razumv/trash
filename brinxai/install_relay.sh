@@ -9,7 +9,8 @@ echo "Удаляем BrixAI Relay докер контейнер если уже 
 docker rm -f brinxai_relay &>/dev/null
 docker rm -f brinxai_relay_amd64 &>/dev/null
 docker rm -f brinxai_relay_arm64 &>/dev/null
-
+export NODE_UUID="$NODE_UUID"
+echo $NODE_UUID
 echo "Запускаем установщик BrixAI Relay"
 ARCH=$(dpkg --print-architecture)
 
