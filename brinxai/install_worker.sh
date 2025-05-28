@@ -35,7 +35,6 @@ else
 fi
 
 # Prompt user for WORKER_PORT
-read -p "Введите порт для воркера (Enter - по умолчанию 5011): " USER_PORT
 USER_PORT=5011
 
 mkdir -p $HOME/brinxai_worker
