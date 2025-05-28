@@ -5,8 +5,6 @@ echo "--------------------------------------------------------------------------
 
 echo "Устанавливаем софт (временной диапазон ожидания ~5-20 min.)"
 echo "-----------------------------------------------------------------------------"
-curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/main.sh | bash &>/dev/null
-
 echo "Удаляем BrixAI Relay докер контейнер если уже стоит."
 docker rm -f brinxai_relay &>/dev/null
 docker rm -f brinxai_relay_amd64 &>/dev/null
