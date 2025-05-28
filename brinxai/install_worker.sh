@@ -3,7 +3,8 @@
 echo "-----------------------------------------------------------------------------"
 curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/doubletop.sh | bash
 echo "-----------------------------------------------------------------------------"
-
+export NODE_UUID="$NODE_UUID"
+echo $NODE_UUID
 # Removing old installation if exists
 echo "Удаляем старую версию brinx.ai (если уже стоит)"
 docker rm -f brinxai_worker-worker-1 text-ui stable-diffusion rembg upscaler brinxai_relay 2>/dev/null || true
