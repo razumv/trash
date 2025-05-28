@@ -4,11 +4,6 @@ echo "--------------------------------------------------------------------------
 curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/doubletop.sh | bash
 echo "-----------------------------------------------------------------------------"
 
-echo "Устанавливаем софт (временной диапазон ожидания ~5-10 min.)"
-curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/main.sh | bash &>/dev/null
-curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/ufw.sh | bash &>/dev/null
-curl -s https://raw.githubusercontent.com/DOUBLE-TOP/tools/main/docker.sh | bash &>/dev/null
-
 # Removing old installation if exists
 echo "Удаляем старую версию brinx.ai (если уже стоит)"
 docker rm -f brinxai_worker-worker-1 text-ui stable-diffusion rembg upscaler brinxai_relay 2>/dev/null || true
