@@ -43,7 +43,10 @@ sudo iptables -t nat -A POSTROUTING -s 192.168.255.0/24 -o "$EXT_IFACE" -j MASQU
 # Make iptables rules persistent
 echo "💾 Making iptables rules persistent..."
 sudo apt-get update
-sudo apt-get install -y iptables-persistent
+echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections
+echo iptables-persistent iptables-persistent/autosave_v6 boolean true | sudo debconf-set-selections
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y iptables-persistent
+
 sudo netfilter-persistent save
 
 # Docker volume creation
