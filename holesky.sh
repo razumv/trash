@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo apt install whiptail -y
 
 if [ ! -d "/home/user/eth-docker" ]; then
         sudo -u user git clone https://github.com/eth-educators/eth-docker.git /home/user/eth-docker
